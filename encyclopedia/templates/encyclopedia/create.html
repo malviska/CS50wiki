@@ -1,0 +1,28 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+  New Entry
+{% endblock %}
+
+{% block body %}
+  <h1> Create new entry </h1>
+  {% if isNameError %}
+    <p style="color: red;font-size: large;"> Entry already exist</p>
+  {% endif %}
+  <form action="{% url 'create' %}" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      {% if field.name == "textArea" %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label><br>
+        {{ field }}
+      {% else %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+        {{ field }}
+        <br>
+      {% endif %}
+    {% endfor %}
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+{% endblock %}

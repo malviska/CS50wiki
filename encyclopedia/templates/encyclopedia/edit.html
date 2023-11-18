@@ -1,0 +1,26 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+Edit: {{ title }}
+{% endblock %}
+
+{% block body %}
+  <h1> Edit entry </h1>
+  <p>Title: {{ title }}</p>
+  <form action="{% url 'edit' entry=title %}" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      {% if field.name == "textArea" %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label><br>
+        {{ field }}
+      {% else %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+        {{ field }}
+        <br>
+      {% endif %}
+    {% endfor %}
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+{% endblock %}
